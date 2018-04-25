@@ -259,8 +259,8 @@ class LogStash::Inputs::JmxPipe < LogStash::Inputs::Base
 
           @queries.each do |query|
             any_commit_done = FALSE
+            values = event_context.clone
             query['objects'].each_entry do |bean_name, attr_spec|
-              values = event_context.clone
               jmx_objects = JMX::MBean.find_all_by_name bean_name, :connection => jmx_connection
               if jmx_objects.length > 0
                 if query['objects'].length > 1 and jmx_objects.length > 1
